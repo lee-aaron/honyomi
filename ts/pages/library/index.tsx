@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
-import { useTheme } from '@react-navigation/native';
-import { renderManga } from '../manga';
+import { useTheme, useNavigation } from '@react-navigation/native';
+import { MangaView } from '../../components/manga';
 
 function LibraryScreen() {
 
   const [manga, setManga] = React.useState(new Array());
   const { colors } = useTheme();
+  const navigator = useNavigation();
 
   // Fetch data from cache
   React.useEffect(() => {
@@ -51,11 +52,14 @@ function LibraryScreen() {
         ...styles.title
       }}>Library</Text>
       <FlatList
+        style={styles.list}
         data={manga}
-        renderItem={renderManga}
+        renderItem={({ item }) =>
+          <MangaView item={item} navigator={navigator} />
+        }
         keyExtractor={item => item.title}
         numColumns={2}
-        columnWrapperStyle={{justifyContent: 'space-between'}}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
       />
     </View>
   )
@@ -67,7 +71,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    marginBottom: 5
+  },
+  list: {
+    marginBottom: 35
   }
 });
 

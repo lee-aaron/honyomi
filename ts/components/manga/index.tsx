@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, Text, Dimensions, StyleSheet, Image } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import { handleMangaController } from '../controllers';
 
 interface SManga {
   url: string,
@@ -12,11 +13,23 @@ interface SManga {
   thumbnail_url?: string,
 }
 
-const renderManga = ({ item }: any) => {
+// Renderable Manga Icon
+const MangaView: React.FC<any> = ({ item, navigator }: any) => {
+  return (
+    <TouchableWithoutFeedback onPress={() => handleMangaController(item, navigator)}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Image style={styles.image} source={{ uri: item.thumbnail_url }} />
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}
+
+// Renderable Manga Details
+const MangaDetails: React.FC<any> = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Image style={styles.image} source={{ uri: item.thumbnail_url }} />
+      <Text style={styles.title}>Placeholder</Text>
     </View>
   );
 }
@@ -28,8 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 1,
     margin: 5,
-    padding: 5,
-    borderColor: 'black',
+    borderColor: 'white',
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderRightWidth: 1,
@@ -39,7 +51,8 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover'
+    resizeMode: 'cover',
+    borderRadius: 5
   },
   title: {
     position: 'absolute',
@@ -51,5 +64,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export { renderManga };
+export { MangaView };
 export type { SManga };

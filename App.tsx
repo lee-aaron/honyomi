@@ -15,18 +15,21 @@ import {
 } from 'react-native';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 
-import TabNavigation from './ts/components/tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import StackNavigation from './ts/pages/stack';
 
 const App = () => {
 
-  const { colors } = useColorScheme() === 'dark' ? DarkTheme : DefaultTheme;
+  const currTheme = useColorScheme() === 'dark' ? DarkTheme : DefaultTheme;
 
   return (
     <AppearanceProvider>
-      <StatusBar backgroundColor={colors.background} />
-      <SafeAreaView style={{flex: 0, backgroundColor: colors.background}} />
-      <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
-        <TabNavigation />
+      <StatusBar backgroundColor={currTheme.colors.background} />
+      <SafeAreaView style={{flex: 0, backgroundColor: currTheme.colors.background}} />
+      <SafeAreaView style={{flex: 1, backgroundColor: currTheme.colors.background}}>
+        <NavigationContainer theme={currTheme} >
+          <StackNavigation />
+        </NavigationContainer>
       </SafeAreaView>
     </AppearanceProvider>
   );
