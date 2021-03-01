@@ -1,13 +1,12 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
-import { useTheme, useNavigation } from '@react-navigation/native';
+import { View, FlatList, StyleSheet } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MangaView } from '../../components/manga';
 
-function LibraryScreen() {
+const LibraryScreen: React.FC<BottomTabScreenProps<any>> = ({ navigation }) => {
 
   const [manga, setManga] = React.useState(new Array());
-  const { colors } = useTheme();
-  const navigator = useNavigation();
 
   // Fetch data from cache
   React.useEffect(() => {
@@ -47,15 +46,11 @@ function LibraryScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={{
-        color: colors.text,
-        ...styles.title
-      }}>Library</Text>
       <FlatList
         style={styles.list}
         data={manga}
         renderItem={({ item }) =>
-          <MangaView item={item} navigator={navigator} />
+          <MangaView item={item} navigator={navigation} />
         }
         keyExtractor={item => item.title}
         numColumns={2}

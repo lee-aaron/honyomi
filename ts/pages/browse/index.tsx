@@ -1,20 +1,24 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 
-function BrowseScreen() {
+const BrowseScreen: React.FC<BottomTabScreenProps<any>> = () => {
+
   return (
-    <View>
-      <Text style={styles.title}>Browse</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Browse</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  title: {
-    position: 'absolute',
-    top: 15,
-    left: 15,
-    fontSize: 20,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    color: 'white'
   }
 });
 
